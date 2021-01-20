@@ -3,15 +3,18 @@
     <div class="product__image" />
     <div class="product__info">
       <h2 class="product__title">Tour salta fila dei Musei Vaticani</h2>
-      <div>Roma</div>
-      <div>4.6(25)</div>
-      <div>$67</div>
+      <icon-group name="map-pin" text="Roma" />
+      <icon-group name="star" text="4.6 (25)" />
+      <icon-group name="dollar-sign" text="$67 / per day" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
+import IconGroup from './IconGroup.vue';
+
 export default {
+  components: { IconGroup },
   name: 'Product',
 };
 </script>
@@ -42,7 +45,7 @@ export default {
   line-height: 1.3;
 }
 .product__title {
+  margin-bottom: 10px;
   font-size: 20px;
 }
-/* BG image */
 </style>
