@@ -1,6 +1,11 @@
 <template>
   <div class="product">
-    <div class="product__image" :style="{ backgroundImage: `url(${image})` }" />
+    <figure class="product__image-wrapper">
+      <div class="product__image" :style="{ backgroundImage: `url(${image})` }" />
+      <div class="product__icon" @click="toggleWishlist">
+        <base-icon name="heart" :color="isFavourite ? '#e91e63' : '#000'" :fill="isFavourite ? '#e91e63' : 'none'" />
+      </div>
+    </figure>
     <div class="product__info">
       <h2 class="product__title">{{ title }}</h2>
       <icon-group name="map-pin" :text="city" />
@@ -13,10 +18,11 @@
 <script lang="ts">
 import { ProductType } from '@/types/Product.types';
 import { defineComponent } from '@vue/composition-api';
+import BaseIcon from './BaseIcon.vue';
 import IconGroup from './IconGroup.vue';
 
 export default defineComponent({
-  components: { IconGroup },
+  components: { IconGroup, BaseIcon },
   name: 'Product',
   props: {
     product: {
@@ -29,6 +35,7 @@ export default defineComponent({
       title: this.product.title,
       city: this.product.city.name,
       image: this.product.coverImageUrl,
+      isFavourite: false,
     };
   },
   computed: {
@@ -37,6 +44,16 @@ export default defineComponent({
     },
     price(): string {
       return `${this.product.retailPrice.formattedIsoValue}`;
+    },
+  },
+  methods: {
+    toggleWishlist() {
+      if (this.isFavourite) {
+        this.isFavourite = false;
+        return this.$emit('removeFromWishlist', this.product.uuid);
+      }
+      this.isFavourite = true;
+      return this.$emit('addToWishlist', this.product.uuid);
     },
   },
 });
@@ -54,6 +71,9 @@ export default defineComponent({
     background: #f3f0f0;
   }
 }
+.product__image-wrapper {
+  position: relative;
+}
 .product__image {
   background-repeat: no-repeat;
   background-size: cover;
@@ -61,6 +81,22 @@ export default defineComponent({
   width: 100%;
   height: 200px;
   border-radius: 3px;
+}
+.product__icon {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  background: rgba(255, 255, 255, 0.6);
+  padding: 10px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.7);
+  }
 }
 .product__info {
   margin-top: 20px;

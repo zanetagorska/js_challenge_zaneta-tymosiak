@@ -21,7 +21,7 @@ export default Vue.extend({
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  color: #444a59;
+  /* color: #444a59; */
 }
 li {
   list-style: none;

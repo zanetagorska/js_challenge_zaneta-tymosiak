@@ -1,2 +1,3 @@
-const fetchProductList = 'fetchProductList';
-export default fetchProductList;
+export const fetchProductList = 'fetchProductList';
+export const addIdToWishlist = 'addIdToWishlist';
+export const removeIdFromWishlist = 'removeIdFromWishlist';

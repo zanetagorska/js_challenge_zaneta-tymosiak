@@ -1,5 +1,5 @@
 export type ProductType = {
-  id: string;
+  uuid: string;
   title: string;
   coverImageUrl: string;
   city: {
