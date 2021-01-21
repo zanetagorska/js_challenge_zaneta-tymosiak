@@ -1,12 +1,13 @@
 export type ProductType = {
   id: string;
   title: string;
-  coverUrl: string;
+  coverImageUrl: string;
   city: {
     name: string;
   };
   retailPrice: {
     formattedValue: string;
+    formattedIsoValue: string;
     value: number;
   };
   reviewsAvg: number;

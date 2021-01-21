@@ -1,44 +1,27 @@
+import fetchProductList from "@/types/Action.types";
+import SET_PRODUCT_LIST from "@/types/Mutation.types";
 import Vue from "vue";
 import Vuex from "vuex";
+import Service from '@/service';
+import camelizeKeys from "@/utils/camelizeKeys";
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
   state: {
-    productList: [
-      {
-        id: "d752296e-176f-413c-a61d-0b4931a54be8",
-        title: "Tour salta fila per piccoli gruppi ai Musei Vaticani e alla Cappella Sistina",
-        coverUrl: "https://images.musement.com/cover/0002/37/thumb_136037_cover_header.jpeg",
-        city: {
-          name: 'Roma',
-        },
-        retailPrice: {
-          formattedValue: "€ 49.90",
-          value: 49.9,
-        },
-        reviewsAvg: 4.2,
-        reviewsNumber: 246,
-        topSeller: true,
-      },
-      {
-        id: "d752296e-176f-413c-a61d-0b4931a54be1",
-        title: "Tour salta fila per piccoli gruppi ai Musei Vaticani e alla Cappella Sistina",
-        coverUrl: "https://images.musement.com/cover/0002/37/thumb_136037_cover_header.jpeg",
-        city: {
-          name: 'Roma',
-        },
-        retailPrice: {
-          formattedValue: "€ 49.90",
-          value: 49.9,
-        },
-        reviewsAvg: 4.2,
-        reviewsNumber: 246,
-        topSeller: true,
-      }
-    ]
+    productList: []
   },
-  mutations: {},
-  actions: {},
-  modules: {}
+  mutations: {
+    [SET_PRODUCT_LIST](state, productList) {
+      state.productList = productList;
+    },
+  },
+  actions: {
+    [fetchProductList]({ commit }) {
+      Service.getProductList().then(productList => {
+        const camelizedProductList = productList.map((product: Record<string, unknown>) => camelizeKeys(product))
+        commit(SET_PRODUCT_LIST, camelizedProductList);
+      });
+    },
+  },
 });

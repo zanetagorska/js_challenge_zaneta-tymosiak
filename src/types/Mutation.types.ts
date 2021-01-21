@@ -1,0 +1,2 @@
+const SET_PRODUCT_LIST = 'SET_PRODUCT_LIST';
+export default SET_PRODUCT_LIST;

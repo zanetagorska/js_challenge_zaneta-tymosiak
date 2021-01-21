@@ -11,7 +11,7 @@
 </template>
 
 <script lang="ts">
-import { ProductType } from '@/types/Product';
+import { ProductType } from '@/types/Product.types';
 import { defineComponent } from '@vue/composition-api';
 import IconGroup from './IconGroup.vue';
 
@@ -28,7 +28,7 @@ export default defineComponent({
     return {
       title: this.product.title,
       city: this.product.city.name,
-      image: this.product.coverUrl,
+      image: this.product.coverImageUrl,
     };
   },
   computed: {
@@ -36,7 +36,7 @@ export default defineComponent({
       return `${this.product.reviewsAvg} (${this.product.reviewsNumber})`;
     },
     price(): string {
-      return `${this.product.retailPrice.formattedValue}`;
+      return `${this.product.retailPrice.formattedIsoValue}`;
     },
   },
 });
