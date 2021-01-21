@@ -1,22 +1,45 @@
 <template>
   <div class="product">
-    <div class="product__image" />
+    <div class="product__image" :style="{ backgroundImage: `url(${image})` }" />
     <div class="product__info">
-      <h2 class="product__title">Tour salta fila dei Musei Vaticani</h2>
-      <icon-group name="map-pin" text="Roma" />
-      <icon-group name="star" text="4.6 (25)" />
-      <icon-group name="dollar-sign" text="$67 / per day" />
+      <h2 class="product__title">{{ title }}</h2>
+      <icon-group name="map-pin" :text="city" />
+      <icon-group name="star" :text="review" />
+      <icon-group name="dollar-sign" :text="price" />
     </div>
   </div>
 </template>
 
 <script lang="ts">
+import { ProductType } from '@/types/Product';
+import { defineComponent } from '@vue/composition-api';
 import IconGroup from './IconGroup.vue';
 
-export default {
+export default defineComponent({
   components: { IconGroup },
   name: 'Product',
-};
+  props: {
+    product: {
+      type: Object as () => ProductType,
+      required: true,
+    },
+  },
+  data() {
+    return {
+      title: this.product.title,
+      city: this.product.city.name,
+      image: this.product.coverUrl,
+    };
+  },
+  computed: {
+    review(): string {
+      return `${this.product.reviewsAvg} (${this.product.reviewsNumber})`;
+    },
+    price(): string {
+      return `${this.product.retailPrice.formattedValue}`;
+    },
+  },
+});
 </script>
 
 <style lang="scss" scoped>
@@ -32,7 +55,6 @@ export default {
   }
 }
 .product__image {
-  background-image: url('../assets/images/activity_image.jpeg');
   background-repeat: no-repeat;
   background-size: cover;
   background-position: center;

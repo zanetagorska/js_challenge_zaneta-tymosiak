@@ -2,21 +2,21 @@
   <div class="home">
     <div>Header</div>
     <div class="home__product-list">
-      <product />
-      <product />
-      <product />
-      <product />
-      <product />
-      <product />
+      <Product v-for="product in productList" :key="product.id" :product="product" />
     </div>
   </div>
 </template>
 
-<script lang="ts">
+<script>
 import Product from '@/components/Product.vue';
+import { mapState } from 'vuex';
+
 export default {
   components: { Product },
   name: 'Home',
+  computed: {
+    ...mapState(['productList']),
+  },
 };
 </script>
 
