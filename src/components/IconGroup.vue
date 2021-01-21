@@ -28,10 +28,7 @@ export default {
 .icon-group {
   display: flex;
   align-items: center;
-
-  &:not(:last-child) {
-    margin-bottom: 5px;
-  }
+  margin-bottom: 5px;
 }
 .icon-group__text {
   margin-left: 5px;

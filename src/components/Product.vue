@@ -3,7 +3,7 @@
     <figure class="product__image-wrapper">
       <div class="product__image" :style="{ backgroundImage: `url(${image})` }" />
       <div class="product__icon" @click="toggleWishlist">
-        <base-icon name="heart" :color="isFavourite ? '#e91e63' : '#000'" :fill="isFavourite ? '#e91e63' : 'none'" />
+        <base-icon name="heart" :color="isInWishlist ? '#e91e63' : '#000'" :fill="isInWishlist ? '#e91e63' : 'none'" />
       </div>
     </figure>
     <div class="product__info">
@@ -11,6 +11,13 @@
       <icon-group name="map-pin" :text="city" />
       <icon-group name="star" :text="review" />
       <icon-group name="dollar-sign" :text="price" />
+    </div>
+    <div class="product__actions">
+      <number-input :count="count" @onIncrement="incrementCount" @onDecrement="decrementCount" />
+      <button class="product__button" @click="toggleCart(true)">Add to cart</button>
+      <span @click="toggleCart(false)" class="product__close">
+        <base-icon v-if="isInCart" name="x" :color="'#f44336'" />
+      </span>
     </div>
   </div>
 </template>
@@ -20,9 +27,10 @@ import { ProductType } from '@/types/Product.types';
 import { defineComponent } from '@vue/composition-api';
 import BaseIcon from './BaseIcon.vue';
 import IconGroup from './IconGroup.vue';
+import NumberInput from './NumberInput.vue';
 
 export default defineComponent({
-  components: { IconGroup, BaseIcon },
+  components: { IconGroup, BaseIcon, NumberInput },
   name: 'Product',
   props: {
     product: {
@@ -35,7 +43,9 @@ export default defineComponent({
       title: this.product.title,
       city: this.product.city.name,
       image: this.product.coverImageUrl,
-      isFavourite: false,
+      isInWishlist: false,
+      isInCart: false,
+      count: 1,
     };
   },
   computed: {
@@ -48,12 +58,26 @@ export default defineComponent({
   },
   methods: {
     toggleWishlist() {
-      if (this.isFavourite) {
-        this.isFavourite = false;
+      if (this.isInWishlist) {
+        this.isInWishlist = false;
         return this.$emit('removeFromWishlist', this.product.uuid);
       }
-      this.isFavourite = true;
+      this.isInWishlist = true;
       return this.$emit('addToWishlist', this.product.uuid);
+    },
+    toggleCart(show: boolean) {
+      this.isInCart = show;
+      if (!show) {
+        this.count = 1;
+      }
+    },
+    incrementCount() {
+      this.count += 1;
+    },
+    decrementCount() {
+      if (this.count > 1) {
+        this.count -= 1;
+      }
     },
   },
 });
@@ -105,5 +129,16 @@ export default defineComponent({
 .product__title {
   margin-bottom: 10px;
   font-size: 20px;
+}
+.product__actions {
+  display: flex;
+}
+.product__button {
+  padding: 5px 10px;
+  cursor: pointer;
+}
+.product__close {
+  display: flex;
+  cursor: pointer;
 }
 </style>
