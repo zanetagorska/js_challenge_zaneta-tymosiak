@@ -17,11 +17,14 @@ export default Vue.extend({
 </script>
 
 <style lang="scss">
+#app {
+  color: #0a2b4e;
+}
 * {
+  font-family: 'Lato-Regular', sans-serif;
   box-sizing: border-box;
   padding: 0;
   margin: 0;
-  /* color: #444a59; */
 }
 li {
   list-style: none;

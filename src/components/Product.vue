@@ -134,7 +134,7 @@ export default defineComponent({
 }
 .product__title {
   margin-bottom: 10px;
-  font-size: 20px;
+  font-size: 18px;
 }
 .product__actions {
   display: flex;

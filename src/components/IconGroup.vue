@@ -29,6 +29,7 @@ export default {
   display: flex;
   align-items: center;
   margin-bottom: 5px;
+  font-size: 14px;
 }
 .icon-group__text {
   margin-left: 5px;
