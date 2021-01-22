@@ -7,6 +7,7 @@ import { ADD_TO_CART, ADD_TO_WISHLIST, REMOVE_FROM_CART, REMOVE_FROM_WISHLIST, S
 import { addIdToWishlist, addItemToCart, fetchProductList, removeIdFromWishlist, removeItemFromCart } from "@/types/Action.types";
 import { ProductType } from "@/types/Product.types";
 import { CartItem } from "@/types/Cart.types";
+import { cartCount, cartTotalPrice, wishlishCount } from "@/types/Getter.types";
 
 Vue.use(Vuex);
 
@@ -31,8 +32,7 @@ export default new Vuex.Store({
       if (index < 0) {
         return state.cart.push(activeItem);
       }
-      state.cart[index] = activeItem;
-      return state.cart;
+      return state.cart.splice(index, 1, activeItem);
     },
     [REMOVE_FROM_CART](state, productId) {
       state.cart = state.cart.filter(cartItem => cartItem.product.uuid !== productId)
@@ -57,5 +57,10 @@ export default new Vuex.Store({
     [removeItemFromCart]({ commit }, productId) {
       commit(REMOVE_FROM_CART, productId)
     },
+  },
+  getters: {
+    [wishlishCount]: state => state.wishlist.length,
+    [cartCount]: state => state.cart.reduce((total, item) => total + item.count, 0),
+    [cartTotalPrice]: state => state.cart.reduce((total, item) => total + item.count * item.product.retailPrice.value, 0),
   },
 });

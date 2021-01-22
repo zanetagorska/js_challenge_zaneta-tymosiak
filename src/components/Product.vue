@@ -80,6 +80,7 @@ export default defineComponent({
     removeFromCart() {
       this.isInCart = false;
       this.count = 1;
+      return this.$emit('removeFromCart', this.product.uuid);
     },
   },
 });
