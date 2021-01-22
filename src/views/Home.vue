@@ -8,6 +8,8 @@
         :product="product"
         @addToWishlist="addToWishlist"
         @removeFromWishlist="removeFromWishlist"
+        @addToCart="addToCart"
+        @removeFromCart="removeFromCart"
       />
     </div>
   </div>
@@ -16,7 +18,13 @@
 <script>
 import Product from '@/components/Product.vue';
 import { mapState } from 'vuex';
-import { fetchProductList, addIdToWishlist, removeIdFromWishlist } from '@/types/Action.types';
+import {
+  fetchProductList,
+  addIdToWishlist,
+  removeIdFromWishlist,
+  addItemToCart,
+  removeItemFromCart,
+} from '@/types/Action.types';
 
 export default {
   components: { Product },
@@ -30,6 +38,12 @@ export default {
     },
     removeFromWishlist(id) {
       this.$store.dispatch(removeIdFromWishlist, id);
+    },
+    addToCart(cartItem) {
+      this.$store.dispatch(addItemToCart, cartItem);
+    },
+    removeFromCart(id) {
+      this.$store.dispatch(removeItemFromCart, id);
     },
   },
   created() {

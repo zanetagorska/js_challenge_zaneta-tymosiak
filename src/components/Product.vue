@@ -14,8 +14,8 @@
     </div>
     <div class="product__actions">
       <number-input :count="count" @onIncrement="incrementCount" @onDecrement="decrementCount" />
-      <button class="product__button" @click="toggleCart(true)">Add to cart</button>
-      <span @click="toggleCart(false)" class="product__close">
+      <button class="product__button" @click="addToCart">Add to cart</button>
+      <span @click="removeFromCart" class="product__close">
         <base-icon v-if="isInCart" name="x" :color="'#f44336'" />
       </span>
     </div>
@@ -65,12 +65,6 @@ export default defineComponent({
       this.isInWishlist = true;
       return this.$emit('addToWishlist', this.product.uuid);
     },
-    toggleCart(show: boolean) {
-      this.isInCart = show;
-      if (!show) {
-        this.count = 1;
-      }
-    },
     incrementCount() {
       this.count += 1;
     },
@@ -78,6 +72,14 @@ export default defineComponent({
       if (this.count > 1) {
         this.count -= 1;
       }
+    },
+    addToCart() {
+      this.isInCart = true;
+      return this.$emit('addToCart', { product: this.product, count: this.count });
+    },
+    removeFromCart() {
+      this.isInCart = false;
+      this.count = 1;
     },
   },
 });
