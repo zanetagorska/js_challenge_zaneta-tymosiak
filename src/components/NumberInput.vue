@@ -1,13 +1,13 @@
 <template>
   <div class="number-input">
     <button type="button" class="number-input__control" @click="decrementValue">
-      <base-icon name="minus" />
+      <base-icon name="minus" color="#fff" />
     </button>
     <div class="number-input__count">
       <input type="number" autocomplete="on" step="1" v-model="count" />
     </div>
     <button type="button" class="number-input__control" @click="incrementValue">
-      <base-icon name="plus" />
+      <base-icon name="plus" color="#fff" />
     </button>
   </div>
 </template>
@@ -40,12 +40,24 @@ export default defineComponent({
 .number-input__control {
   display: flex;
   align-items: center;
-  height: 32px;
+  height: 35px;
+  border: none;
+  padding: 5px;
   cursor: pointer;
+  background-color: #203762;
+  color: #fff;
+
+  &:hover {
+    opacity: 0.8;
+  }
+
+  &:focus {
+    outline: none;
+  }
 }
 
 input {
-  height: 32px;
+  height: 35px;
   width: 40px;
   text-align: center;
 }

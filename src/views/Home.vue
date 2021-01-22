@@ -13,7 +13,9 @@
           @removeFromCart="removeFromCart"
         />
       </div>
-      <button @click="loadMore">Load more</button>
+      <div class="home__load-more" @click="loadMore">
+        <base-button>Load more</base-button>
+      </div>
     </container>
   </div>
 </template>
@@ -21,6 +23,7 @@
 <script>
 import Product from '@/components/Product.vue';
 import Header from '@/components/Header.vue';
+import BaseButton from '@/components/BaseButton.vue';
 import { mapState } from 'vuex';
 import {
   fetchProductList,
@@ -33,7 +36,7 @@ import {
 import Container from '@/components/Container.vue';
 
 export default {
-  components: { Product, Header, Container },
+  components: { Product, Header, Container, BaseButton },
   name: 'Home',
   computed: {
     ...mapState(['productList']),
@@ -63,9 +66,15 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.home {
+  margin: 80px 0 30px;
+}
 .home__product-list {
   display: flex;
   flex-wrap: wrap;
   margin: 0 -20px;
+}
+.home__load-more {
+  text-align: center;
 }
 </style>

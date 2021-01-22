@@ -21,8 +21,14 @@ export default {
 
 <style lang="scss" scoped>
 .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
   padding: 20px 0;
   border-bottom: 1px solid #e6e2e2;
+  background: #fff;
+  z-index: 1;
 }
 .header__content {
   display: flex;

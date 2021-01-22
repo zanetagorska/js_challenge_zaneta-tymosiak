@@ -40,7 +40,8 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: pink;
+  background: #203762;
+  color: #fff;
   font-size: 12px;
 }
 </style>

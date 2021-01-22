@@ -14,7 +14,9 @@
     </div>
     <div class="product__actions">
       <number-input :count="count" @onIncrement="incrementCount" @onDecrement="decrementCount" />
-      <button class="product__button" @click="addToCart">Add to cart</button>
+      <div @click="addToCart" class="product__add-to-cart">
+        <base-button>Add to cart</base-button>
+      </div>
       <span @click="removeFromCart" class="product__close">
         <base-icon v-if="isInCart" name="x" :color="'#f44336'" />
       </span>
@@ -25,12 +27,13 @@
 <script lang="ts">
 import { ProductType } from '@/types/Product.types';
 import { defineComponent } from '@vue/composition-api';
+import BaseButton from './BaseButton.vue';
 import BaseIcon from './BaseIcon.vue';
 import IconGroup from './IconGroup.vue';
 import NumberInput from './NumberInput.vue';
 
 export default defineComponent({
-  components: { IconGroup, BaseIcon, NumberInput },
+  components: { IconGroup, BaseIcon, NumberInput, BaseButton },
   name: 'Product',
   props: {
     product: {
@@ -136,9 +139,8 @@ export default defineComponent({
 .product__actions {
   display: flex;
 }
-.product__button {
-  padding: 5px 10px;
-  cursor: pointer;
+.product__add-to-cart {
+  margin-left: 10px;
 }
 .product__close {
   display: flex;
