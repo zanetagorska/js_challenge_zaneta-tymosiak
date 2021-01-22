@@ -11,8 +11,10 @@
           @removeFromWishlist="removeFromWishlist"
           @addToCart="addToCart"
           @removeFromCart="removeFromCart"
-        /></div
-    ></container>
+        />
+      </div>
+      <button @click="loadMore">Load more</button>
+    </container>
   </div>
 </template>
 
@@ -26,6 +28,7 @@ import {
   removeIdFromWishlist,
   addItemToCart,
   removeItemFromCart,
+  expandProductList,
 } from '@/types/Action.types';
 import Container from '@/components/Container.vue';
 
@@ -47,6 +50,10 @@ export default {
     },
     removeFromCart(id) {
       this.$store.dispatch(removeItemFromCart, id);
+    },
+    loadMore() {
+      const offset = this.productList.length / 6;
+      this.$store.dispatch(expandProductList, offset);
     },
   },
   created() {

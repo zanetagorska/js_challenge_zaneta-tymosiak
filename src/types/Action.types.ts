@@ -1,4 +1,5 @@
 export const fetchProductList = 'fetchProductList';
+export const expandProductList = 'expandProductList';
 
 export const addIdToWishlist = 'addIdToWishlist';
 export const removeIdFromWishlist = 'removeIdFromWishlist';

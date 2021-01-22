@@ -3,8 +3,8 @@ import Vue from "vue";
 import Vuex from "vuex";
 import Service from '@/service';
 import camelizeKeys from "@/utils/camelizeKeys";
-import { ADD_TO_CART, ADD_TO_WISHLIST, REMOVE_FROM_CART, REMOVE_FROM_WISHLIST, SET_PRODUCT_LIST } from "@/types/Mutation.types";
-import { addIdToWishlist, addItemToCart, fetchProductList, removeIdFromWishlist, removeItemFromCart } from "@/types/Action.types";
+import { ADD_TO_CART, ADD_TO_WISHLIST, EXPAND_PRODUCT_LIST, REMOVE_FROM_CART, REMOVE_FROM_WISHLIST, SET_PRODUCT_LIST } from "@/types/Mutation.types";
+import { addIdToWishlist, addItemToCart, expandProductList, fetchProductList, removeIdFromWishlist, removeItemFromCart } from "@/types/Action.types";
 import { ProductType } from "@/types/Product.types";
 import { CartItem } from "@/types/Cart.types";
 import { cartCount, cartTotalPrice, wishlishCount } from "@/types/Getter.types";
@@ -20,6 +20,10 @@ export default new Vuex.Store({
   mutations: {
     [SET_PRODUCT_LIST](state, productList) {
       state.productList = productList;
+    },
+    [EXPAND_PRODUCT_LIST](state, products) {
+      const pl = state.productList;
+      pl.push.apply(state.productList, products);
     },
     [ADD_TO_WISHLIST](state, productId) {
       state.wishlist.push(productId)
@@ -43,6 +47,12 @@ export default new Vuex.Store({
       Service.getProductList().then(productList => {
         const camelizedProductList = productList.map((product: Record<string, unknown>) => camelizeKeys(product))
         commit(SET_PRODUCT_LIST, camelizedProductList);
+      });
+    },
+    [expandProductList]({ commit }, offset) {
+      Service.getProductList(offset).then(products => {
+        const camelizedProductList = products.map((product: Record<string, unknown>) => camelizeKeys(product))
+          commit(EXPAND_PRODUCT_LIST, camelizedProductList);
       });
     },
     [addIdToWishlist]({ commit }, productId) {
