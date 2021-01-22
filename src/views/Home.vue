@@ -1,22 +1,24 @@
 <template>
   <div class="home">
-    <div>Header</div>
-    <div class="home__product-list" v-if="productList.length > 0">
-      <Product
-        v-for="product in productList"
-        :key="product.id"
-        :product="product"
-        @addToWishlist="addToWishlist"
-        @removeFromWishlist="removeFromWishlist"
-        @addToCart="addToCart"
-        @removeFromCart="removeFromCart"
-      />
-    </div>
+    <Header />
+    <container>
+      <div class="home__product-list" v-if="productList.length > 0">
+        <Product
+          v-for="product in productList"
+          :key="product.id"
+          :product="product"
+          @addToWishlist="addToWishlist"
+          @removeFromWishlist="removeFromWishlist"
+          @addToCart="addToCart"
+          @removeFromCart="removeFromCart"
+        /></div
+    ></container>
   </div>
 </template>
 
 <script>
 import Product from '@/components/Product.vue';
+import Header from '@/components/Header.vue';
 import { mapState } from 'vuex';
 import {
   fetchProductList,
@@ -25,9 +27,10 @@ import {
   addItemToCart,
   removeItemFromCart,
 } from '@/types/Action.types';
+import Container from '@/components/Container.vue';
 
 export default {
-  components: { Product },
+  components: { Product, Header, Container },
   name: 'Home',
   computed: {
     ...mapState(['productList']),
@@ -53,10 +56,6 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.home {
-  max-width: 1200px;
-  margin: auto;
-}
 .home__product-list {
   display: flex;
   flex-wrap: wrap;
