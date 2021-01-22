@@ -4,7 +4,7 @@
       <base-icon name="minus" color="#fff" />
     </button>
     <div class="number-input__count">
-      <input type="number" autocomplete="on" step="1" v-model="count" />
+      <input type="number" disabled step="1" v-model="count" />
     </div>
     <button type="button" class="number-input__control" @click="incrementValue">
       <base-icon name="plus" color="#fff" />
@@ -60,6 +60,10 @@ input {
   height: 35px;
   width: 40px;
   text-align: center;
+  background: transparent;
+  outline: none;
+  border: 1px solid #203762;
+  color: black;
 }
 
 /* Chrome, Safari, Edge, Opera */

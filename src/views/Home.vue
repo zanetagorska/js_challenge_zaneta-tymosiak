@@ -2,7 +2,7 @@
   <div class="home">
     <Header />
     <container>
-      <div class="home__product-list" v-if="productList.length > 0">
+      <div class="home__product-list">
         <Product
           v-for="product in productList"
           :key="product.id"
@@ -13,7 +13,7 @@
           @removeFromCart="removeFromCart"
         />
       </div>
-      <div class="home__load-more" @click="loadMore">
+      <div class="home__load-more" @click="loadMore" v-if="productList.length > 0">
         <base-button>Load more</base-button>
       </div>
     </container>

@@ -1,7 +1,7 @@
 <template>
   <div class="counter-icon">
     <div><base-icon :name="name" /></div>
-    <div v-if="count" class="counter-icon__count">{{ count }}</div>
+    <div v-show="count" class="counter-icon__count">{{ count }}</div>
   </div>
 </template>
 
