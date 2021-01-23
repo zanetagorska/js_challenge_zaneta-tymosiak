@@ -2,8 +2,8 @@
   <div class="product">
     <figure class="product__image-wrapper">
       <div class="product__image" :style="{ backgroundImage: `url(${image})` }" />
-      <div class="product__icon" @click="toggleWishlist">
-        <base-icon name="heart" :color="isInWishlist ? '#e91e63' : '#000'" :fill="isInWishlist ? '#e91e63' : 'none'" />
+      <div class="product__icon" @click="toggleWishlist" data-testid="toggle-wishlist-button">
+        <base-icon name="heart" :color="isOnWishlist ? '#e91e63' : '#000'" :fill="isOnWishlist ? '#e91e63' : 'none'" />
       </div>
     </figure>
     <div class="product__info">
@@ -14,10 +14,10 @@
     </div>
     <div class="product__actions">
       <number-input :count="count" @onIncrement="incrementCount" @onDecrement="decrementCount" />
-      <div @click="addToCart" class="product__add-to-cart">
+      <div @click="addToCart" class="product__add-to-cart" data-testid="add-to-cart-button">
         <base-button>Add to cart</base-button>
       </div>
-      <span @click="removeFromCart" class="product__close">
+      <span @click="removeFromCart" class="product__close" data-testid="remove-from-cart-button">
         <base-icon v-if="isInCart" name="x" :color="'#f44336'" />
       </span>
     </div>
@@ -46,7 +46,7 @@ export default defineComponent({
       title: this.product.title,
       city: this.product.city.name,
       image: this.product.coverImageUrl,
-      isInWishlist: false,
+      isOnWishlist: false,
       isInCart: false,
       count: 1,
     };
@@ -61,11 +61,11 @@ export default defineComponent({
   },
   methods: {
     toggleWishlist() {
-      if (this.isInWishlist) {
-        this.isInWishlist = false;
+      if (this.isOnWishlist) {
+        this.isOnWishlist = false;
         return this.$emit('removeFromWishlist', this.product.uuid);
       }
-      this.isInWishlist = true;
+      this.isOnWishlist = true;
       return this.$emit('addToWishlist', this.product.uuid);
     },
     incrementCount() {
