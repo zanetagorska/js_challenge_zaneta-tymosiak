@@ -1,12 +1,12 @@
 <template>
   <div class="number-input">
-    <button type="button" class="number-input__control" @click="decrementValue">
+    <button type="button" class="number-input__control" @click="decrementValue" data-testid="decrement-button">
       <base-icon name="minus" color="#fff" />
     </button>
     <div class="number-input__count">
       <input type="number" disabled step="1" v-model="count" />
     </div>
-    <button type="button" class="number-input__control" @click="incrementValue">
+    <button type="button" class="number-input__control" @click="incrementValue" data-testid="increment-button">
       <base-icon name="plus" color="#fff" />
     </button>
   </div>
@@ -20,7 +20,10 @@ export default defineComponent({
   components: { BaseIcon },
   name: 'NumberInput',
   props: {
-    count: { type: Number, required: true },
+    count: {
+      type: Number,
+      required: true,
+    },
   },
   methods: {
     incrementValue() {
