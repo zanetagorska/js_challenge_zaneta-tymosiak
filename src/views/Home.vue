@@ -34,6 +34,7 @@ import {
   expandProductList,
 } from '@/types/Action.types';
 import Container from '@/components/Container.vue';
+import { DEFAULT_LIMIT } from '@/service';
 
 export default {
   components: { Product, Header, Container, BaseButton },
@@ -55,7 +56,7 @@ export default {
       this.$store.dispatch(removeItemFromCart, id);
     },
     loadMore() {
-      const offset = this.productList.length / 6;
+      const offset = this.productList.length / DEFAULT_LIMIT;
       this.$store.dispatch(expandProductList, offset);
     },
   },
