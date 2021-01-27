@@ -3,13 +3,14 @@
     <span class="header-actions__wishlist">
       <counter-icon name="heart" :count="wishlistCount" />
     </span>
-    <counter-icon name="shopping-bag" :count="cartCount" />
-    <span v-if="cartTotalPrice">{{ totalPrice }}</span>
+    <span @mouseover="handleCartIconHover(true)" @mouseleave="handleCartIconHover(false)">
+      <counter-icon name="shopping-bag" :count="cartCount" />
+    </span>
   </div>
 </template>
 
 <script lang="ts">
-import { cartCount, cartTotalPrice, wishlishCount } from '@/types/Getter.types';
+import { cartCount, wishlishCount } from '@/types/Getter.types';
 import { defineComponent } from '@vue/composition-api';
 import { mapGetters } from 'vuex';
 import CounterIcon from './CounterIcon.vue';
@@ -18,9 +19,11 @@ export default defineComponent({
   components: { CounterIcon },
   name: 'HeaderActions',
   computed: {
-    ...mapGetters([wishlishCount, cartCount, cartTotalPrice]),
-    totalPrice() {
-      return `${this.cartTotalPrice} zł`;
+    ...mapGetters([wishlishCount, cartCount]),
+  },
+  methods: {
+    handleCartIconHover(shouldShow: boolean) {
+      this.$emit('toggleMiniCart', shouldShow);
     },
   },
 });

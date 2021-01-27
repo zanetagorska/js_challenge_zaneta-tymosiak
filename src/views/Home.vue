@@ -1,6 +1,8 @@
 <template>
   <div class="home">
-    <Header />
+    <Header>
+      <mini-cart :totalPrice="totalPrice" :cart="cart" v-if="cart.length" />
+    </Header>
     <container>
       <div class="home__product-list">
         <Product
@@ -13,7 +15,7 @@
           @removeFromCart="removeFromCart"
         />
       </div>
-      <div class="home__load-more" @click="loadMore" v-if="productList.length > 0">
+      <div class="home__load-more" @click="loadMore" v-if="productList.length">
         <base-button>Load more</base-button>
       </div>
     </container>
@@ -24,7 +26,8 @@
 import Product from '@/components/Product.vue';
 import Header from '@/components/Header.vue';
 import BaseButton from '@/components/BaseButton.vue';
-import { mapState } from 'vuex';
+import MiniCart from '@/components/MiniCart.vue';
+import { mapState, mapGetters } from 'vuex';
 import {
   fetchProductList,
   addIdToWishlist,
@@ -33,14 +36,19 @@ import {
   removeItemFromCart,
   expandProductList,
 } from '@/types/Action.types';
+import { cartTotalPrice } from '@/types/Getter.types';
 import Container from '@/components/Container.vue';
 import { DEFAULT_LIMIT } from '@/service';
 
 export default {
-  components: { Product, Header, Container, BaseButton },
+  components: { Product, Header, Container, BaseButton, MiniCart },
   name: 'Home',
   computed: {
-    ...mapState(['productList']),
+    ...mapState(['productList', 'cart']),
+    ...mapGetters([cartTotalPrice]),
+    totalPrice() {
+      return `${this.cartTotalPrice} zł`;
+    },
   },
   methods: {
     addToWishlist(id) {
