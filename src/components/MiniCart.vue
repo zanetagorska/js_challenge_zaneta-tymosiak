@@ -2,7 +2,7 @@
   <div class="mini-cart">
     <h3>Your cart</h3>
     <mini-cart-item v-for="item in cart" :key="item.product.uuid" :item="item" />
-    <div class="mini-cart__total">Total {{ totalPrice }}</div>
+    <div class="mini-cart__total">Total {{ totalPrice }} zł</div>
   </div>
 </template>
 
@@ -14,7 +14,7 @@ export default {
   name: 'MiniCart',
   props: {
     totalPrice: {
-      type: String,
+      type: Number,
       required: true,
     },
     cart: {

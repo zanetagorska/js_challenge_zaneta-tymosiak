@@ -4,26 +4,38 @@
       <counter-icon name="heart" :count="wishlistCount" />
     </span>
     <span @mouseover="handleCartIconHover(true)" @mouseleave="handleCartIconHover(false)">
-      <counter-icon name="shopping-bag" :count="cartCount" />
+      <span class="header-actions__cart-icon-wrapper">
+        <counter-icon name="shopping-bag" :count="cartCount" />
+      </span>
+      <div class="header-actions__mini-cart" v-show="isMiniCartVisible" v-if="cartCount">
+        <mini-cart :totalPrice="cartTotalPrice" :cart="cart" />
+      </div>
     </span>
   </div>
 </template>
 
 <script lang="ts">
-import { cartCount, wishlishCount } from '@/types/Getter.types';
+import { cartCount, cartTotalPrice, wishlishCount } from '@/types/Getter.types';
 import { defineComponent } from '@vue/composition-api';
-import { mapGetters } from 'vuex';
+import { mapGetters, mapState } from 'vuex';
 import CounterIcon from './CounterIcon.vue';
+import MiniCart from './MiniCart.vue';
 
 export default defineComponent({
-  components: { CounterIcon },
+  components: { CounterIcon, MiniCart },
   name: 'HeaderActions',
+  data() {
+    return {
+      isMiniCartVisible: false,
+    };
+  },
   computed: {
-    ...mapGetters([wishlishCount, cartCount]),
+    ...mapState(['cart']),
+    ...mapGetters([wishlishCount, cartCount, cartTotalPrice]),
   },
   methods: {
     handleCartIconHover(shouldShow: boolean) {
-      this.$emit('toggleMiniCart', shouldShow);
+      this.isMiniCartVisible = shouldShow;
     },
   },
 });
@@ -35,5 +47,13 @@ export default defineComponent({
 }
 .header-actions__wishlist {
   margin-right: 10px;
+}
+.header-actions__cart-icon-wrapper {
+  cursor: pointer;
+}
+.header-actions__mini-cart {
+  position: absolute;
+  top: 50px;
+  right: 0;
 }
 </style>

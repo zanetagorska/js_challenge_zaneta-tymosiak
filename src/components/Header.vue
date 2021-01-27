@@ -3,10 +3,7 @@
     <container>
       <div class="header__content">
         <h1>Company</h1>
-        <header-actions @toggleMiniCart="toggleMiniCart" />
-        <div class="header__mini-cart" v-show="isMiniCartVisible">
-          <slot />
-        </div>
+        <header-actions />
       </div>
     </container>
   </div>
@@ -20,16 +17,6 @@ import HeaderActions from './HeaderActions.vue';
 export default defineComponent({
   components: { Container, HeaderActions },
   name: 'Header',
-  data() {
-    return {
-      isMiniCartVisible: false,
-    };
-  },
-  methods: {
-    toggleMiniCart(bool: boolean) {
-      this.isMiniCartVisible = bool;
-    },
-  },
 });
 </script>
 
@@ -48,10 +35,5 @@ export default defineComponent({
   display: flex;
   align-items: center;
   justify-content: space-between;
-}
-.header__mini-cart {
-  position: absolute;
-  top: 50px;
-  right: 0;
 }
 </style>
