@@ -3,7 +3,7 @@
     <div :style="{ backgroundImage: `url(${item.product.coverImageUrl})` }" class="mini-cart-item__image" />
     <div>
       <h3 class="mini-cart-item__title">{{ item.product.title }}</h3>
-      <div class="mini-cart-item__count">{{ item.count }} x {{ item.count * item.product.retailPrice.value }} zł</div>
+      <div class="mini-cart-item__count">{{ item.count }} x {{ item.product.retailPrice.value }} zł</div>
     </div>
   </div>
 </template>
