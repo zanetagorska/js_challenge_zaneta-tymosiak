@@ -1,4 +1,5 @@
 export const DEFAULT_LIMIT = 6; 
+
 const BASE_URL = "https://api.musement.com/api/v3";
 
 export default {

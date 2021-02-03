@@ -1,3 +1,5 @@
+export const offset = 'offset';
+
 export const wishlishCount = 'wishlistCount';
 
 export const cartCount = 'cartCount';

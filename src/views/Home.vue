@@ -38,7 +38,6 @@ import {
 } from '@/types/Action.types';
 import { cartTotalPrice } from '@/types/Getter.types';
 import Container from '@/components/Container.vue';
-import { DEFAULT_LIMIT } from '@/service';
 
 export default {
   components: { Product, Header, Container, BaseButton, MiniCart },
@@ -64,8 +63,7 @@ export default {
       this.$store.dispatch(removeItemFromCart, id);
     },
     loadMore() {
-      const offset = this.productList.length / DEFAULT_LIMIT;
-      this.$store.dispatch(expandProductList, offset);
+      this.$store.dispatch(expandProductList);
     },
   },
   created() {

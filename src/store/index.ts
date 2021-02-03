@@ -1,13 +1,13 @@
 
 import Vue from "vue";
 import Vuex from "vuex";
-import Service from '@/service';
+import Service, { DEFAULT_LIMIT } from '@/service';
 import camelizeKeys from "@/utils/camelizeKeys";
 import { ADD_TO_CART, ADD_TO_WISHLIST, EXPAND_PRODUCT_LIST, REMOVE_FROM_CART, REMOVE_FROM_WISHLIST, SET_PRODUCT_LIST } from "@/types/Mutation.types";
 import { addIdToWishlist, addItemToCart, expandProductList, fetchProductList, removeIdFromWishlist, removeItemFromCart } from "@/types/Action.types";
 import { ProductType } from "@/types/Product.types";
 import { CartItem } from "@/types/Cart.types";
-import { cartCount, cartTotalPrice, wishlishCount } from "@/types/Getter.types";
+import { cartCount, cartTotalPrice, offset, wishlishCount } from "@/types/Getter.types";
 
 Vue.use(Vuex);
 
@@ -49,8 +49,8 @@ export default new Vuex.Store({
         commit(SET_PRODUCT_LIST, camelizedProductList);
       });
     },
-    [expandProductList]({ commit }, offset) {
-      Service.getProductList(offset).then(products => {
+    [expandProductList]({ commit }) {
+      Service.getProductList(this.getters.offset).then(products => {
         const camelizedProductList = products.map((product: Record<string, unknown>) => camelizeKeys(product))
           commit(EXPAND_PRODUCT_LIST, camelizedProductList);
       });
@@ -69,6 +69,7 @@ export default new Vuex.Store({
     },
   },
   getters: {
+    [offset]: state => state.productList.length / DEFAULT_LIMIT,
     [wishlishCount]: state => state.wishlist.length,
     [cartCount]: state => state.cart.reduce((total, item) => total + item.count, 0),
     [cartTotalPrice]: state => state.cart.reduce((total, item) => total + item.count * item.product.retailPrice.value, 0),
