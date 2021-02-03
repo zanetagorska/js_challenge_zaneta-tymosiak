@@ -45,7 +45,6 @@ export default defineComponent({
     return {
       title: this.product.title,
       city: this.product.city.name,
-      image: this.product.coverImageUrl,
       isOnWishlist: false,
       isInCart: false,
       count: 1,
@@ -57,6 +56,9 @@ export default defineComponent({
     },
     price(): string {
       return `${this.product.retailPrice.formattedIsoValue}`;
+    },
+    image(): string {
+      return `${this.product.coverImageUrl}?q=60&h=200`;
     },
   },
   methods: {
