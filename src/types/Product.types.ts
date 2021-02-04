@@ -1,4 +1,4 @@
-export type ProductType = {
+export type Product = {
   uuid: string;
   title: string;
   coverImageUrl: string;

@@ -2,15 +2,13 @@ import Service, { DEFAULT_LIMIT } from "@/service";
 import { fetchProductList, expandProductList } from "@/types/Action.types";
 import { offset } from "@/types/Getter.types";
 import { SET_PRODUCT_LIST, EXPAND_PRODUCT_LIST } from "@/types/Mutation.types";
-import { ProductType } from "@/types/Product.types";
+import { Product } from "@/types/Product.types";
 import { ProductState, RootState } from "@/types/State.types";
 import camelizeKeys from "@/utils/camelizeKeys";
 import { ActionContext } from "vuex";
 
-// ProductType to Product
-
 export const state = {
-  productList: [] as ProductType[],
+  productList: [] as Product[],
 } as ProductState;
 
 export const getters = {
@@ -18,10 +16,10 @@ export const getters = {
 }
 
 export const mutations = {
-  [SET_PRODUCT_LIST](state: ProductState, productList: ProductType[]) {
+  [SET_PRODUCT_LIST](state: ProductState, productList: Product[]) {
     state.productList = productList;
   },
-  [EXPAND_PRODUCT_LIST](state: ProductState, products: ProductType[]) {
+  [EXPAND_PRODUCT_LIST](state: ProductState, products: Product[]) {
     const pl = state.productList;
     pl.push.apply(state.productList, products);
   },

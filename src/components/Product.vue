@@ -25,7 +25,7 @@
 </template>
 
 <script lang="ts">
-import { ProductType } from '@/types/Product.types';
+import { Product } from '@/types/Product.types';
 import { defineComponent } from '@vue/composition-api';
 import BaseButton from './BaseButton.vue';
 import BaseIcon from './BaseIcon.vue';
@@ -37,7 +37,7 @@ export default defineComponent({
   name: 'Product',
   props: {
     product: {
-      type: Object as () => ProductType,
+      type: Object as () => Product,
       required: true,
     },
   },

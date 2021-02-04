@@ -1,9 +1,9 @@
 import { CartItem } from "./Cart.types"
-import { ProductType } from "./Product.types"
+import { Product } from "./Product.types"
 
 export type RootState = {
   wishlist: string[];
-  productList: ProductType[];
+  productList: Product[];
   cart: CartItem[];
 }
 
@@ -12,5 +12,5 @@ export type WishlistState = {
 }
 
 export type ProductState = {
-  productList: ProductType[];
+  productList: Product[];
 }
