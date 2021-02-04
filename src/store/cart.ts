@@ -3,6 +3,7 @@ import { CartItem } from "@/types/Cart.types";
 import { cartCount, cartTotalPrice } from "@/types/Getter.types";
 import { ADD_TO_CART, REMOVE_FROM_CART } from "@/types/Mutation.types";
 import { CartState, RootState } from "@/types/State.types";
+import Vue from "vue";
 import { ActionContext } from "vuex";
 
 export const state = {
@@ -13,9 +14,10 @@ export const mutations = {
   [ADD_TO_CART](state: CartState, activeItem: CartItem) {
     const index = state.cart.findIndex(item => item.product.uuid === activeItem.product.uuid);
     if (index < 0) {
-      return state.cart.push(activeItem);
+      state.cart.push(activeItem);
+    } else {
+      Vue.set(state.cart, index, activeItem);
     }
-    return state.cart.splice(index, 1, activeItem);
   },
   [REMOVE_FROM_CART](state: CartState, productId: string) {
     state.cart = state.cart.filter(cartItem => cartItem.product.uuid !== productId)
