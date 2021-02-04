@@ -43,7 +43,10 @@ export default {
   components: { Product, Header, Container, BaseButton, MiniCart },
   name: 'Home',
   computed: {
-    ...mapState(['productList', 'cart']),
+    ...mapState({
+      productList: state => state.productList.productList,
+      cart: state => state.cart,
+    }),
     ...mapGetters([cartTotalPrice]),
     totalPrice() {
       return `${this.cartTotalPrice} zł`;

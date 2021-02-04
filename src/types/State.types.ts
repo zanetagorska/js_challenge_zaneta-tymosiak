@@ -10,3 +10,7 @@ export type RootState = {
 export type WishlistState = {
   wishlist: string[];
 }
+
+export type ProductState = {
+  productList: ProductType[];
+}
