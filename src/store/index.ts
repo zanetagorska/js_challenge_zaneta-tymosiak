@@ -3,20 +3,25 @@ import Vue from "vue";
 import Vuex from "vuex";
 import Service, { DEFAULT_LIMIT } from '@/service';
 import camelizeKeys from "@/utils/camelizeKeys";
-import { ADD_TO_CART, ADD_TO_WISHLIST, EXPAND_PRODUCT_LIST, REMOVE_FROM_CART, REMOVE_FROM_WISHLIST, SET_PRODUCT_LIST } from "@/types/Mutation.types";
-import { addIdToWishlist, addItemToCart, expandProductList, fetchProductList, removeIdFromWishlist, removeItemFromCart } from "@/types/Action.types";
+import { ADD_TO_CART, EXPAND_PRODUCT_LIST, REMOVE_FROM_CART, SET_PRODUCT_LIST } from "@/types/Mutation.types";
+import { addItemToCart, expandProductList, fetchProductList, removeItemFromCart } from "@/types/Action.types";
+import { cartCount, cartTotalPrice, offset } from "@/types/Getter.types";
+import { RootState } from "@/types/State.types";
 import { ProductType } from "@/types/Product.types";
 import { CartItem } from "@/types/Cart.types";
-import { cartCount, cartTotalPrice, offset, wishlishCount } from "@/types/Getter.types";
+import * as wishlist from './wishlist';
 
 Vue.use(Vuex);
 
+
 export default new Vuex.Store({
+  modules: {
+    wishlist,
+  },
   state: {
     productList: [] as ProductType[],
-    wishlist: [] as string[],
     cart: [] as CartItem[],
-  },
+  } as RootState,
   mutations: {
     [SET_PRODUCT_LIST](state, productList) {
       state.productList = productList;
@@ -24,12 +29,6 @@ export default new Vuex.Store({
     [EXPAND_PRODUCT_LIST](state, products) {
       const pl = state.productList;
       pl.push.apply(state.productList, products);
-    },
-    [ADD_TO_WISHLIST](state, productId) {
-      state.wishlist.push(productId)
-    },
-    [REMOVE_FROM_WISHLIST](state, productId) {
-      state.wishlist = state.wishlist.filter(id => id !== productId)
     },
     [ADD_TO_CART](state, activeItem) {
       const index = state.cart.findIndex(item => item.product.uuid === activeItem.product.uuid);
@@ -55,12 +54,6 @@ export default new Vuex.Store({
           commit(EXPAND_PRODUCT_LIST, camelizedProductList);
       });
     },
-    [addIdToWishlist]({ commit }, productId) {
-      commit(ADD_TO_WISHLIST, productId);
-    },
-    [removeIdFromWishlist]({ commit }, productId) {
-      commit(REMOVE_FROM_WISHLIST, productId);
-    },
     [addItemToCart]({ commit }, cartItem) {
       commit(ADD_TO_CART, cartItem)
     },
@@ -70,7 +63,6 @@ export default new Vuex.Store({
   },
   getters: {
     [offset]: state => state.productList.length / DEFAULT_LIMIT,
-    [wishlishCount]: state => state.wishlist.length,
     [cartCount]: state => state.cart.reduce((total, item) => total + item.count, 0),
     [cartTotalPrice]: state => state.cart.reduce((total, item) => total + item.count * item.product.retailPrice.value, 0),
   },
