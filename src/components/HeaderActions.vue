@@ -8,7 +8,7 @@
         <counter-icon name="shopping-bag" :count="cartCount" />
       </span>
       <div class="header-actions__mini-cart" v-show="isMiniCartVisible" v-if="cartCount">
-        <mini-cart :totalPrice="cartTotalPrice" :cart="cart" />
+        <mini-cart :totalPrice="cartTotalPrice" :cart="cart.cart" />
       </div>
     </span>
   </div>

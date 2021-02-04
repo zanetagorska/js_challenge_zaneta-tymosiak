@@ -45,7 +45,7 @@ export default {
   computed: {
     ...mapState({
       productList: state => state.productList.productList,
-      cart: state => state.cart,
+      cart: state => state.cart.cart,
     }),
     ...mapGetters([cartTotalPrice]),
     totalPrice() {
