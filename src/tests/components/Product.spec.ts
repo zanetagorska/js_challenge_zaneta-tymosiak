@@ -1,11 +1,11 @@
 import { mount } from '@vue/test-utils';
 import Product from '../../components/Product.vue';
-import productMock from '../../mocks/Product.mock';
+import { product0 } from '../../mocks/Product.mock';
 
 describe('Product', () => {
   test('emit event when remove-product button is clicked', () => {
     const wrapper = mount(Product, {
-      propsData: { product: productMock }
+      propsData: { product: product0 }
     });
 
     const button = wrapper.find('[data-testId="remove-from-cart-button"]');
@@ -14,12 +14,12 @@ describe('Product', () => {
     const emittedEvent = wrapper.emitted('removeFromCart');
     expect(emittedEvent).toHaveLength(1);
 
-    const expectedPayload = productMock.uuid;
+    const expectedPayload = product0.uuid;
     expect(wrapper.emitted('removeFromCart')).toEqual([[expectedPayload]]);
   });
   test('emit event when add-product button is clicked', () => {
     const wrapper = mount(Product, {
-      propsData: { product: productMock }
+      propsData: { product: product0 }
     });
 
     const button = wrapper.find('[data-testId="add-to-cart-button"]');
@@ -30,7 +30,7 @@ describe('Product', () => {
   });
   test('emit event when toggle wishlist-button is clicked', () => {
     const wrapper = mount(Product, {
-      propsData: { product: productMock }
+      propsData: { product: product0 }
     });
 
     wrapper.setData({ isOnWishlist: false })

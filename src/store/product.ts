@@ -12,7 +12,7 @@ export const state = {
 } as ProductState;
 
 export const getters = {
-  [offset]: (state: ProductState) => state.productList.length / DEFAULT_LIMIT,
+  [offset]: (state: ProductState) => Math.ceil(state.productList.length / DEFAULT_LIMIT),
 }
 
 export const mutations = {
